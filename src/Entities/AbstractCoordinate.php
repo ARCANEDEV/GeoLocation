@@ -2,7 +2,6 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinate;
 use Arcanedev\GeoLocation\Exceptions\InvalidCoordinateException;
-use InvalidArgumentException;
 
 /**
  * Class     AbstractCoordinate
