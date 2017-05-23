@@ -20,9 +20,9 @@
         "arcanedev/support": "~4.0"
     },
     "require-dev": {
-        "phpunit/phpcov":   "~3.0",
-        "phpunit/phpunit":  "~5.0",
-        "orchestra/testbench": "~3.0"
+        "phpunit/phpcov":    "~3.0",
+        "phpunit/phpunit":   "~5.0",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,6 +41,9 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "(~6.0) Required to use the Google webservices."
     },
     "minimum-stability": "dev",
     "prefer-stable" : true

@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\GeoLocation\Tests;
 
 use Arcanedev\GeoLocation\GeoLocationServiceProvider;
-use Illuminate\Support\ServiceProvider;
 
 /**
  * Class     GeoLocationServiceProviderTest
