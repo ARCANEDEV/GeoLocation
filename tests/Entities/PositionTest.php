@@ -113,11 +113,4 @@ class PositionTest extends TestCase
         $this->assertSame($expected, $position->toJson());
         $this->assertSame($expected, json_encode($position));
     }
-
-    /* -----------------------------------------------------------------
-     |  Other Methods
-     | -----------------------------------------------------------------
-     */
-
-
 }
