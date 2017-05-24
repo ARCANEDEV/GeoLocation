@@ -4,6 +4,7 @@ use Arcanedev\GeoLocation\Contracts\Entities\Position as PositionContract;
 use Arcanedev\GeoLocation\Entities\Position;
 use Arcanedev\GeoLocation\Google\AbstractWebService;
 use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class     GeocodingService
@@ -58,9 +59,7 @@ class GeocodingService extends AbstractWebService
             'address' => urlencode($address)
         ]);
 
-        $response = $this->client->request('GET', $url, $options);
-
-        return $this->prepareResponse($response);
+        return $this->get($url, $options);
     }
 
     /**
@@ -77,9 +76,7 @@ class GeocodingService extends AbstractWebService
             'latlng' => $this->parsePosition($position),
         ]);
 
-        $response = $this->client->request('GET', $url, $options);
-
-        return $this->prepareResponse($response);
+        return $this->get($url, $options);
     }
 
     /**
@@ -120,7 +117,7 @@ class GeocodingService extends AbstractWebService
      *
      * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
      */
-    private function prepareResponse($response)
+    protected function prepareResponse(ResponseInterface $response)
     {
         return new GeocodingResponse(
             json_decode($response->getBody(), true)

@@ -2,6 +2,7 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Position;
 use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class     AbstractWebService
@@ -71,9 +72,24 @@ abstract class AbstractWebService
     }
 
     /* -----------------------------------------------------------------
-     |  Other Methods
+     |  Common Methods
      | -----------------------------------------------------------------
      */
+
+    /**
+     * Make a GET request.
+     *
+     * @param  string  $url
+     * @param  array   $options
+     *
+     * @return mixed
+     */
+    protected function get($url, array $options)
+    {
+        $response = $this->client->request('GET', $url, $options);
+
+        return $this->prepareResponse($response);
+    }
 
     /**
      * Prepare the URL query.
@@ -95,6 +111,15 @@ abstract class AbstractWebService
      * @return array
      */
     abstract protected function getDefaultQueryParams();
+
+    /**
+     * Prepare the response.
+     *
+     * @param  \Psr\Http\Message\ResponseInterface  $response
+     *
+     * @return mixed
+     */
+    abstract protected function prepareResponse(ResponseInterface $response);
 
     /**
      * Parse the position object for the query.

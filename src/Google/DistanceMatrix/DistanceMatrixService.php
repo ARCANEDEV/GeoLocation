@@ -4,6 +4,7 @@ use Arcanedev\GeoLocation\Contracts\Entities\Position;
 use Arcanedev\GeoLocation\Google\AbstractWebService;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class     DistanceMatrixService
@@ -121,9 +122,7 @@ class DistanceMatrixService extends AbstractWebService
             'destinations' => $this->parsePosition($end),
         ]);
 
-        $response = $this->client->request('GET', $url, $options);
-
-        return $this->prepareResponse($response);
+        return $this->get($url, $options);
     }
 
     /* -----------------------------------------------------------------
@@ -153,7 +152,7 @@ class DistanceMatrixService extends AbstractWebService
      *
      * @return \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse
      */
-    private function prepareResponse($response)
+    protected function prepareResponse(ResponseInterface $response)
     {
         return new DistanceMatrixResponse(
             json_decode($response->getBody(), true)
