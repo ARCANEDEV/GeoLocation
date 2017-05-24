@@ -78,10 +78,10 @@ class DistanceMatrixServiceTest extends TestCase
         );
 
         $this->assertSame('4,508 km', $response->getDistance());
-        $this->assertSame(4508227, $response->getDistance(false));
+        $this->assertGreaterThanOrEqual(4508227, $response->getDistance(false));
 
         $this->assertSame('1 day 17 hours', $response->getDuration());
-        $this->assertSame(146292, $response->getDuration(false));
+        $this->assertGreaterThanOrEqual(146292, $response->getDuration(false));
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getStartPosition(),
             $this->getEndPosition()
         );
-        
+
         $this->assertGreaterThanOrEqual(4454029, $response->getDistance(false));
         $this->assertGreaterThanOrEqual(3291415, $response->getDuration(false));
     }
