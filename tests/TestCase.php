@@ -1,8 +1,8 @@
 <?php namespace Arcanedev\GeoLocation\Tests;
 
-use Arcanedev\GeoLocation\Entities\Latitude;
-use Arcanedev\GeoLocation\Entities\Longitude;
-use Arcanedev\GeoLocation\Entities\Position;
+use Arcanedev\GeoLocation\Entities\Coordinates\Latitude;
+use Arcanedev\GeoLocation\Entities\Coordinates\Longitude;
+use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
@@ -10,6 +10,8 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
  *
  * @package  Arcanedev\GeoLocation\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @todo: Mock the HTTP Client and api response ?
  */
 abstract class TestCase extends BaseTestCase
 {
@@ -64,7 +66,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create a position object.
      *
-     * @return \Arcanedev\GeoLocation\Entities\Position
+     * @return \Arcanedev\GeoLocation\Entities\Coordinates\Position
      */
     protected function createPosition()
     {
@@ -79,7 +81,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @param  float  $value
      *
-     * @return \Arcanedev\GeoLocation\Entities\Latitude
+     * @return \Arcanedev\GeoLocation\Entities\Coordinates\Latitude
      */
     protected function createLatitude($value = 31.7917)
     {
@@ -91,7 +93,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @param  float  $value
      *
-     * @return \Arcanedev\GeoLocation\Entities\Longitude
+     * @return \Arcanedev\GeoLocation\Entities\Coordinates\Longitude
      */
     protected function createLongitude($value = 7.0926)
     {
@@ -111,12 +113,22 @@ abstract class TestCase extends BaseTestCase
     protected function assertCoordinateInstance($coordinate)
     {
         $expectations = [
-            \Arcanedev\GeoLocation\Contracts\Entities\Coordinate::class,
-            \Arcanedev\GeoLocation\Entities\AbstractCoordinate::class,
+            \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate::class,
+            \Arcanedev\GeoLocation\Entities\Coordinates\AbstractCoordinate::class,
         ];
 
         foreach ($expectations as $expected) {
             $this->assertInstanceOf($expected, $coordinate);
         }
+    }
+
+    /**
+     * Get the fixtures folder path.
+     *
+     * @return string
+     */
+    public function getFixturePath()
+    {
+        return __DIR__ . '/_fixtures';
     }
 }

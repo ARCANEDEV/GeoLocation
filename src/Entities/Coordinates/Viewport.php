@@ -1,7 +1,8 @@
-<?php namespace Arcanedev\GeoLocation\Entities;
+<?php namespace Arcanedev\GeoLocation\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Position as PositionContract;
-use Arcanedev\GeoLocation\Contracts\Entities\Viewport as ViewportContract;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position as PositionContract;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Viewport as ViewportContract;
+use Arcanedev\GeoLocation\Traits\CanBeJsonable;
 
 /**
  * Class     Viewport
@@ -12,14 +13,21 @@ use Arcanedev\GeoLocation\Contracts\Entities\Viewport as ViewportContract;
 class Viewport implements ViewportContract
 {
     /* -----------------------------------------------------------------
+     |  Traits
+     | -----------------------------------------------------------------
+     */
+
+    use CanBeJsonable;
+
+    /* -----------------------------------------------------------------
      |  Properties
      | -----------------------------------------------------------------
      */
 
-    /** @var  \Arcanedev\GeoLocation\Contracts\Entities\Position */
+    /** @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position */
     protected $northeast;
 
-    /** @var  \Arcanedev\GeoLocation\Contracts\Entities\Position */
+    /** @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position */
     protected $southwest;
 
     /* -----------------------------------------------------------------
@@ -30,8 +38,8 @@ class Viewport implements ViewportContract
     /**
      * Viewport constructor.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $northeast
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $southwest
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $northeast
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $southwest
      */
     public function __construct(PositionContract $northeast, PositionContract $southwest)
     {
@@ -46,7 +54,7 @@ class Viewport implements ViewportContract
     /**
      * Get the North/East coordinates.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Position
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position
      */
     public function getNorthEast()
     {
@@ -56,7 +64,7 @@ class Viewport implements ViewportContract
     /**
      * Set the North/East coordinates.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $northeast
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $northeast
      *
      * @return self
      */
@@ -70,7 +78,7 @@ class Viewport implements ViewportContract
     /**
      * Get the South/West coordinates.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Position
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position
      */
     public function getSouthWest()
     {
@@ -80,7 +88,7 @@ class Viewport implements ViewportContract
     /**
      * Set the South/West coordinates.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $southwest
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $southwest
      *
      * @return self
      */
@@ -99,36 +107,14 @@ class Viewport implements ViewportContract
     /**
      * Create a new viewport instance.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $northeast
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $southwest
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $northeast
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $southwest
      *
      * @return self
      */
     public static function create(PositionContract $northeast, PositionContract $southwest)
     {
         return new static($northeast, $southwest);
-    }
-
-    /**
-     * Convert the object to its JSON representation.
-     *
-     * @param  int  $options
-     *
-     * @return string
-     */
-    public function toJson($options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
     }
 
     /**

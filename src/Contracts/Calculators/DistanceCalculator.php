@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\GeoLocation\Contracts\Calculators;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Position;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 
 /**
  * Interface     DistanceCalculator
@@ -27,8 +27,8 @@ interface DistanceCalculator
     /**
      * Calculate the distance between two positions.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $start
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $end
      *
      * @return \Arcanedev\GeoLocation\Contracts\Calculators\Distance
      */
@@ -37,8 +37,8 @@ interface DistanceCalculator
     /**
      * Calculate the numeric distance between two positions.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $start
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $end
      * @param  int                                                 $precision
      *
      * @return float

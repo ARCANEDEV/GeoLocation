@@ -1,14 +1,15 @@
-<?php namespace Arcanedev\GeoLocation\Tests\Entities;
+<?php namespace Arcanedev\GeoLocation\Tests\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Entities\Latitude;
+use Arcanedev\GeoLocation\Entities\Coordinates\Latitude;
+use Arcanedev\GeoLocation\Tests\TestCase;
 
 /**
  * Class     LatitudeTest
  *
- * @package  Arcanedev\GeoLocation\Tests\Entities
+ * @package  Arcanedev\GeoLocation\Tests\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class LatitudeTest extends AbstractCoordinateTest
+class LatitudeTest extends TestCase
 {
     /* -----------------------------------------------------------------
      |  Tests
@@ -21,7 +22,7 @@ class LatitudeTest extends AbstractCoordinateTest
         $lat = $this->createLatitude();
 
         $this->assertCoordinateInstance($lat);
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Latitude::class, $lat);
+        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Latitude::class, $lat);
     }
 
     /** @test */

@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\GeoLocation\Contracts\Entities;
+<?php namespace Arcanedev\GeoLocation\Contracts\Entities\Coordinates;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -7,7 +7,7 @@ use JsonSerializable;
 /**
  * Interface     Viewport
  *
- * @package  Arcanedev\GeoLocation\Contracts\Entities
+ * @package  Arcanedev\GeoLocation\Contracts\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface Viewport extends Arrayable, Jsonable, JsonSerializable
@@ -20,14 +20,14 @@ interface Viewport extends Arrayable, Jsonable, JsonSerializable
     /**
      * Get the North/East coordinates.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Position
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position
      */
     public function getNorthEast();
 
     /**
      * Set the North/East coordinates.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $northeast
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $northeast
      *
      * @return self
      */
@@ -36,14 +36,14 @@ interface Viewport extends Arrayable, Jsonable, JsonSerializable
     /**
      * Get the South/West coordinates.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Position
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position
      */
     public function getSouthWest();
 
     /**
      * Set the South/West coordinates.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $southwest
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $southwest
      *
      * @return self
      */
@@ -57,8 +57,8 @@ interface Viewport extends Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new viewport instance.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $northeast
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $southwest
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $northeast
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $southwest
      *
      * @return self
      */

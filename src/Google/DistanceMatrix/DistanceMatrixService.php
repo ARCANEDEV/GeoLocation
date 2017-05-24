@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\GeoLocation\Google\DistanceMatrix;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Position;
-use Arcanedev\GeoLocation\Google\AbstractWebService;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
+use Arcanedev\GeoLocation\Google\AbstractService;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @link     https://developers.google.com/maps/documentation/distance-matrix/intro
  */
-class DistanceMatrixService extends AbstractWebService
+class DistanceMatrixService extends AbstractService
 {
     /* -----------------------------------------------------------------
      |  Constants
@@ -109,15 +109,15 @@ class DistanceMatrixService extends AbstractWebService
     /**
      * Calculate the distance.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $start
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $end
      * @param  array                                               $options
      *
      * @return \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse
      */
     public function calculate(Position $start, Position $end, array $options = [])
     {
-        $url = static::BASE_URL.'?'.$this->prepareQuery([
+        $url = static::BASE_URL.$this->prepareQuery([
             'origins'      => $this->parsePosition($start),
             'destinations' => $this->parsePosition($end),
         ]);

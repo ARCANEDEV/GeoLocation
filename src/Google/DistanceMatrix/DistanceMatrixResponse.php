@@ -1,66 +1,22 @@
 <?php namespace Arcanedev\GeoLocation\Google\DistanceMatrix;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
+use Arcanedev\GeoLocation\Entities\Measures\Distance;
+use Arcanedev\GeoLocation\Entities\Measures\Duration;
+use Arcanedev\GeoLocation\Google\AbstractResponse;
 use Illuminate\Support\Arr;
-use JsonSerializable;
 
-class DistanceMatrixResponse implements Arrayable, Jsonable, JsonSerializable
+/**
+ * Class     DistanceMatrixResponse
+ *
+ * @package  Arcanedev\GeoLocation\Google\DistanceMatrix
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ */
+class DistanceMatrixResponse extends AbstractResponse
 {
-    /* -----------------------------------------------------------------
-     |  Properties
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * The response's data.
-     *
-     * @var  array
-     */
-    protected $data = [];
-
-    /* -----------------------------------------------------------------
-     |  Constructor
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * DistanceMatrixResponse constructor.
-     *
-     * @param  array  $data
-     */
-    public function __construct(array $data = [])
-    {
-        $this->data = $data;
-    }
-
     /* -----------------------------------------------------------------
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
-
-    /**
-     * Get the raw response.
-     *
-     * @return array
-     */
-    public function getRaw()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Get a data with a given key.
-     *
-     * @param  string      $key
-     * @param  mixed|null  $default
-     *
-     * @return mixed
-     */
-    public function get($key, $default = null)
-    {
-        return Arr::get($this->getRaw(), $key, $default);
-    }
 
     /**
      * Get the first origin address.
@@ -109,9 +65,23 @@ class DistanceMatrixResponse implements Arrayable, Jsonable, JsonSerializable
      *
      * @return string|int
      */
-    public function getDistance($text = true)
+    public function distance($text = true)
     {
-        return $this->get('rows.0.elements.0.distance.'. ($text ? 'text' : 'value'));
+        return $text
+            ? $this->getDistance()->text()
+            : $this->getDistance()->value();
+    }
+
+    /**
+     * Get the distance.
+     *
+     * @return \Arcanedev\GeoLocation\Entities\Measures\Distance
+     */
+    public function getDistance()
+    {
+        return Distance::makeFromArray(
+            $this->get('rows.0.elements.0.distance')
+        );
     }
 
     /**
@@ -121,37 +91,29 @@ class DistanceMatrixResponse implements Arrayable, Jsonable, JsonSerializable
      *
      * @return string|int
      */
-    public function getDuration($text = true)
+    public function duration($text = true)
     {
-        return $this->get('rows.0.elements.0.duration.'. ($text ? 'text' : 'value'));
+        return $text
+            ? $this->getDuration()->text()
+            : $this->getDuration()->value();
+    }
+
+    /**
+     * Get the duration (text or value).
+     *
+     * @return \Arcanedev\GeoLocation\Entities\Measures\Duration
+     */
+    public function getDuration()
+    {
+        return Duration::makeFromArray(
+            $this->get('rows.0.elements.0.duration')
+        );
     }
 
     /* -----------------------------------------------------------------
-     |  Other Methods
+     |  Main Methods
      | -----------------------------------------------------------------
      */
-
-    /**
-     * Convert the object to its JSON representation.
-     *
-     * @param  int  $options
-     *
-     * @return string
-     */
-    public function toJson($options = 0)
-    {
-        return json_encode($this->jsonSerialize(), $options);
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
 
     /**
      * Convert the object to array.
@@ -163,24 +125,8 @@ class DistanceMatrixResponse implements Arrayable, Jsonable, JsonSerializable
         return [
             'origin'      => $this->getOriginAddress(),
             'destination' => $this->getDestinationAddress(),
-            'distance'    => [
-                'text'  => $this->getDistance(),
-                'value' => $this->getDistance(false),
-            ],
-            'duration'    => [
-                'text'  => $this->getDuration(),
-                'value' => $this->getDuration(false),
-            ],
+            'distance'    => $this->getDistance()->toArray(),
+            'duration'    => $this->getDuration()->toArray(),
         ];
-    }
-
-    /**
-     * Check if the response's status is OK.
-     *
-     * @return bool
-     */
-    public function isOk()
-    {
-        return $this->get('status') === 'OK';
     }
 }

@@ -1,14 +1,15 @@
-<?php namespace Arcanedev\GeoLocation\Tests\Entities;
+<?php namespace Arcanedev\GeoLocation\Tests\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Entities\Longitude;
+use Arcanedev\GeoLocation\Entities\Coordinates\Longitude;
+use Arcanedev\GeoLocation\Tests\TestCase;
 
 /**
  * Class     LongitudeTest
  *
- * @package  Arcanedev\GeoLocation\Tests\Entities
+ * @package  Arcanedev\GeoLocation\Tests\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class LongitudeTest extends AbstractCoordinateTest
+class LongitudeTest extends TestCase
 {
     /* -----------------------------------------------------------------
      |  Tests
@@ -21,7 +22,7 @@ class LongitudeTest extends AbstractCoordinateTest
         $long = $this->createLongitude();
 
         $this->assertCoordinateInstance($long);
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Longitude::class, $long);
+        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Longitude::class, $long);
     }
 
     /** @test */

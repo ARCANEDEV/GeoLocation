@@ -1,16 +1,16 @@
 <?php namespace Arcanedev\GeoLocation\Google;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Position;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class     AbstractWebService
+ * Class     AbstractService
  *
  * @package  Arcanedev\GeoLocation\Google
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-abstract class AbstractWebService
+abstract class AbstractService
 {
     /* -----------------------------------------------------------------
      |  Properties
@@ -100,9 +100,11 @@ abstract class AbstractWebService
      */
     protected function prepareQuery(array $params)
     {
-        $params = array_merge($params, $this->getDefaultQueryParams());
+        $query = http_build_query(array_filter(
+            array_merge($params, $this->getDefaultQueryParams())
+        ));
 
-        return http_build_query(array_filter($params));
+        return empty($query) ? '' : '?'.$query;
     }
 
     /**
@@ -117,19 +119,19 @@ abstract class AbstractWebService
      *
      * @param  \Psr\Http\Message\ResponseInterface  $response
      *
-     * @return mixed
+     * @return \Arcanedev\GeoLocation\Google\AbstractResponse
      */
     abstract protected function prepareResponse(ResponseInterface $response);
 
     /**
      * Parse the position object for the query.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $position
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $position
      *
      * @return string
      */
     protected function parsePosition(Position $position)
     {
-        return $position->lat()->value().','.$position->long()->value();
+        return $position->lat()->value().','.$position->lng()->value();
     }
 }

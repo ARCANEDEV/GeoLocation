@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\GeoLocation\Tests\Google\DistanceMatrix;
 
-use Arcanedev\GeoLocation\Entities\Position;
+use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse;
 use Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixService;
 use Arcanedev\GeoLocation\Tests\TestCase;
@@ -48,6 +48,7 @@ class DistanceMatrixServiceTest extends TestCase
     public function it_can_be_instantiated()
     {
         $expectations = [
+            \Arcanedev\GeoLocation\Google\AbstractService::class,
             \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixService::class,
         ];
 
@@ -77,11 +78,11 @@ class DistanceMatrixServiceTest extends TestCase
             $response->getDestinationAddress()
         );
 
-        $this->assertSame('4,508 km', $response->getDistance());
-        $this->assertGreaterThanOrEqual(4508227, $response->getDistance(false));
+        $this->assertSame('4,508 km', $response->distance());
+        $this->assertGreaterThanOrEqual(4508227, $response->distance(false));
 
-        $this->assertSame('1 day 17 hours', $response->getDuration());
-        $this->assertGreaterThanOrEqual(146292, $response->getDuration(false));
+        $this->assertSame('1 day 17 hours', $response->duration());
+        $this->assertGreaterThanOrEqual(146292, $response->duration(false));
     }
 
     /** @test */
@@ -103,7 +104,7 @@ class DistanceMatrixServiceTest extends TestCase
             'Mount Lee Dr, Los Angeles, CA 90068, États-Unis',
             $response->getDestinationAddress()
         );
-        $this->assertSame('1 jour 17 heures', $response->getDuration());
+        $this->assertSame('1 jour 17 heures', $response->duration());
     }
 
     /** @test */
@@ -116,8 +117,8 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertGreaterThanOrEqual(4454029, $response->getDistance(false));
-        $this->assertGreaterThanOrEqual(3291415, $response->getDuration(false));
+        $this->assertGreaterThanOrEqual(4454000, $response->distance(false));
+        $this->assertGreaterThanOrEqual(3291400, $response->duration(false));
     }
 
     /**
@@ -141,7 +142,7 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertSame('2,801 mi', $response->getDistance());
+        $this->assertSame('2,801 mi', $response->distance());
     }
 
     /**
