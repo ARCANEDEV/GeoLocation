@@ -1,6 +1,10 @@
 <?php namespace Arcanedev\GeoLocation\Google\Geocoding;
 
+use Arcanedev\GeoLocation\Contracts\Entities\Position as PositionContract;
+use Arcanedev\GeoLocation\Entities\Position;
+use Arcanedev\GeoLocation\Google\AbstractWebService;
 use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class     GeocodingService
@@ -10,7 +14,7 @@ use GuzzleHttp\ClientInterface;
  *
  * @link     https://developers.google.com/maps/documentation/geocoding/intro
  */
-class GeocodingService
+class GeocodingService extends AbstractWebService
 {
     /* -----------------------------------------------------------------
      |  Constants
@@ -18,17 +22,6 @@ class GeocodingService
      */
 
     const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
-
-    /* -----------------------------------------------------------------
-     |  Properties
-     | -----------------------------------------------------------------
-     */
-
-    /** @var  \GuzzleHttp\ClientInterface */
-    protected $client;
-
-    /** @var string|null */
-    protected $key = null;
 
     /* -----------------------------------------------------------------
      |  Constructor
@@ -42,41 +35,9 @@ class GeocodingService
      */
     public function __construct(ClientInterface $client)
     {
-        $this->setHttpClient($client);
+        parent::__construct($client);
+
         $this->setKey(getenv('GOOGLE_MAPS_GEOCODING_KEY'));
-    }
-
-    /* -----------------------------------------------------------------
-     |  Getters & Setters
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * Set the HTTP Client.
-     *
-     * @param  \GuzzleHttp\ClientInterface  $client
-     *
-     * @return self
-     */
-    public function setHttpClient(ClientInterface $client)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Set the API Key.
-     *
-     * @param  string  $key
-     *
-     * @return self
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
     }
 
     /* -----------------------------------------------------------------
@@ -94,29 +55,72 @@ class GeocodingService
      */
     public function geocode($address, array $options = [])
     {
-        $url = static::BASE_URL.'?'.$this->prepareQuery($address);
+        $url = static::BASE_URL.'?'.$this->prepareQuery([
+            'address' => urlencode($address)
+        ]);
 
-        $result = $this->client->request('GET', $url, $options);
-
-        return new GeocodingResponse(
-            json_decode($result->getBody(), true)
-        );
+        return $this->get($url, $options);
     }
 
     /**
-     * Prepare the URL query.
+     * Reverse geocoding (address lookup).
      *
-     * @param  string  $address
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $position
+     * @param  array                                               $options
      *
-     * @return string
+     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
      */
-    private function prepareQuery($address)
+    public function reverse(PositionContract $position, array $options = [])
     {
-        $queryData = array_filter([
-            'address' => urlencode($address),
-            'key'     => $this->key,
+        $url = static::BASE_URL.'?'.$this->prepareQuery([
+            'latlng' => $this->parsePosition($position),
         ]);
 
-        return urldecode(http_build_query($queryData));
+        return $this->get($url, $options);
+    }
+
+    /**
+     * Reverse geocoding (address lookup & simplified).
+     *
+     * @param  float  $lat
+     * @param  float  $long
+     * @param  array  $options
+     *
+     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
+     */
+    public function reversePosition($lat, $long, array $options = [])
+    {
+        return $this->reverse(Position::create($lat, $long), $options);
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * Get the default query params.
+     *
+     * @return array
+     */
+    protected function getDefaultQueryParams()
+    {
+        return [
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * Prepare the response.
+     *
+     * @param  \Psr\Http\Message\ResponseInterface  $response
+     *
+     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
+     */
+    protected function prepareResponse(ResponseInterface $response)
+    {
+        return new GeocodingResponse(
+            json_decode($response->getBody(), true)
+        );
     }
 }

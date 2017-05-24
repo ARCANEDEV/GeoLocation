@@ -68,5 +68,23 @@ class GeocodingServiceTest extends TestCase
         );
 
         $this->assertTrue($response->isOk());
+
+        $position = $response->getLocationPosition();
+
+        $this->assertGreaterThanOrEqual(48.85, $position->lat()->value());
+        $this->assertGreaterThanOrEqual(2.29, $position->long()->value());
+    }
+
+    /** @test */
+    public function it_can_reverse()
+    {
+        $response = $this->service->reversePosition(48.8556475, 2.2986304);
+
+        $this->assertTrue($response->isOk());
+
+        $this->assertContains(
+            'Anatole France, 75007 Paris, France',
+            $response->getFormattedAddress()
+        );
     }
 }

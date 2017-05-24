@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\GeoLocation\Google\DistanceMatrix;
 
 use Arcanedev\GeoLocation\Contracts\Entities\Position;
+use Arcanedev\GeoLocation\Google\AbstractWebService;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class     DistanceMatrixService
@@ -12,7 +14,7 @@ use InvalidArgumentException;
  *
  * @link     https://developers.google.com/maps/documentation/distance-matrix/intro
  */
-class DistanceMatrixService
+class DistanceMatrixService extends AbstractWebService
 {
     /* -----------------------------------------------------------------
      |  Constants
@@ -25,12 +27,6 @@ class DistanceMatrixService
      |  Properties
      | -----------------------------------------------------------------
      */
-
-    /** @var  \GuzzleHttp\ClientInterface */
-    protected $client;
-
-    /** @var string|null */
-    protected $key = null;
 
     /** @var string */
     protected $language = 'en';
@@ -53,7 +49,8 @@ class DistanceMatrixService
      */
     public function __construct(ClientInterface $client)
     {
-        $this->setHttpClient($client);
+        parent::__construct($client);
+
         $this->setKey(getenv('GOOGLE_MAPS_DISTANCE_MATRIX_KEY'));
     }
 
@@ -61,34 +58,6 @@ class DistanceMatrixService
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
-
-    /**
-     * Set the HTTP Client.
-     *
-     * @param  \GuzzleHttp\ClientInterface  $client
-     *
-     * @return self
-     */
-    public function setHttpClient(ClientInterface $client)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Set the API Key.
-     *
-     * @param  string  $key
-     *
-     * @return self
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
-    }
 
     /**
      * Set the language.
@@ -148,55 +117,47 @@ class DistanceMatrixService
      */
     public function calculate(Position $start, Position $end, array $options = [])
     {
-        // https://developers.google.com/maps/documentation/distance-matrix/intro
-
-        $url = static::BASE_URL.'?'.$this->prepareQuery($start, $end);
-
-        $result = $this->client->request('GET', $url, $options);
-
-        return new DistanceMatrixResponse(
-            json_decode($result->getBody(), true)
-        );
-    }
-
-    /**
-     * Prepare the URL query.
-     *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
-     *
-     * @return string
-     */
-    private function prepareQuery(Position $start, Position $end)
-    {
-        $queryData = array_filter([
+        $url = static::BASE_URL.'?'.$this->prepareQuery([
             'origins'      => $this->parsePosition($start),
             'destinations' => $this->parsePosition($end),
-            'mode'         => $this->mode,
-            'language'     => $this->language,
-            'units'        => $this->units,
-            'key'          => $this->key,
         ]);
 
-        return urldecode(http_build_query($queryData));
-    }
-
-    /**
-     * Parse the position object.
-     *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $position
-     *
-     * @return string
-     */
-    private function parsePosition(Position $position)
-    {
-        return $position->lat()->value().','.$position->long()->value();
+        return $this->get($url, $options);
     }
 
     /* -----------------------------------------------------------------
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
+    /**
+     * Get the default query params.
+     *
+     * @return array
+     */
+    protected function getDefaultQueryParams()
+    {
+        return [
+            'mode'         => $this->mode,
+            'language'     => $this->language,
+            'units'        => $this->units,
+            'key'          => $this->key,
+        ];
+    }
+
+    /**
+     * Prepare the response.
+     *
+     * @param  \Psr\Http\Message\ResponseInterface  $response
+     *
+     * @return \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse
+     */
+    protected function prepareResponse(ResponseInterface $response)
+    {
+        return new DistanceMatrixResponse(
+            json_decode($response->getBody(), true)
+        );
+    }
 
     /**
      * Check the mode of transport.
