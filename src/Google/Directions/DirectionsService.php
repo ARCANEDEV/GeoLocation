@@ -223,18 +223,6 @@ class DirectionsService extends AbstractService
      */
 
     /**
-     * Get the default query params.
-     *
-     * @return array
-     */
-    protected function getDefaultQueryParams()
-    {
-        return [
-            'key' => $this->key,
-        ];
-    }
-
-    /**
      * Prepare the response.
      *
      * @param  \Psr\Http\Message\ResponseInterface $response

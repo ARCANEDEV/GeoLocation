@@ -1,27 +1,24 @@
-<?php namespace Arcanedev\GeoLocation\Google\Geocoding;
+<?php namespace Arcanedev\GeoLocation\Google\Elevation;
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position as PositionContract;
-use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Google\AbstractService;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class     GeocodingService
+ * Class     ElevationService
  *
- * @package  Arcanedev\GeoLocation\Google\Geocoding
+ * @package  Arcanedev\GeoLocation\Google\Elevation
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
- *
- * @link     https://developers.google.com/maps/documentation/geocoding/intro
  */
-class GeocodingService extends AbstractService
+class ElevationService extends AbstractService
 {
     /* -----------------------------------------------------------------
      |  Constants
      | -----------------------------------------------------------------
      */
 
-    const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
+    const BASE_URL = 'https://maps.googleapis.com/maps/api/elevation/json';
 
     /* -----------------------------------------------------------------
      |  Constructor
@@ -29,7 +26,7 @@ class GeocodingService extends AbstractService
      */
 
     /**
-     * GoogleDistanceMatrix constructor.
+     * ElevationService constructor.
      *
      * @param  \GuzzleHttp\ClientInterface  $client
      */
@@ -37,7 +34,7 @@ class GeocodingService extends AbstractService
     {
         parent::__construct($client);
 
-        $this->setKey(getenv('GOOGLE_MAPS_GEOCODING_KEY'));
+        $this->setKey(getenv('GOOGLE_MAPS_ELEVATION_KEY'));
     }
 
     /* -----------------------------------------------------------------
@@ -48,15 +45,15 @@ class GeocodingService extends AbstractService
     /**
      * Get the geocoding response.
      *
-     * @param  string  $address
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $position
      * @param  array   $options
      *
-     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
+     * @return \Arcanedev\GeoLocation\Google\Elevation\ElevationResponse
      */
-    public function geocode($address, array $options = [])
+    public function location(PositionContract $position, array $options = [])
     {
         $url = static::BASE_URL.$this->prepareQuery([
-            'address' => urlencode($address)
+            'locations' => $this->parsePosition($position),
         ]);
 
         return $this->get($url, $options);
@@ -65,32 +62,22 @@ class GeocodingService extends AbstractService
     /**
      * Reverse geocoding (address lookup).
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $position
-     * @param  array                                               $options
+     * @param  array  $positions
+     * @param  array  $options
      *
-     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
+     * @return \Arcanedev\GeoLocation\Google\Elevation\ElevationResponse
      */
-    public function reverse(PositionContract $position, array $options = [])
+    public function path(array $positions, array $options = [])
     {
+        $positions = array_map(function (PositionContract $position) {
+            return $this->parsePosition($position);
+        }, $positions);
+
         $url = static::BASE_URL.$this->prepareQuery([
-            'latlng' => $this->parsePosition($position),
+            'locations' => implode('|', $positions),
         ]);
 
         return $this->get($url, $options);
-    }
-
-    /**
-     * Reverse geocoding (address lookup & simplified).
-     *
-     * @param  float  $lat
-     * @param  float  $long
-     * @param  array  $options
-     *
-     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
-     */
-    public function reversePosition($lat, $long, array $options = [])
-    {
-        return $this->reverse(Position::create($lat, $long), $options);
     }
 
     /* -----------------------------------------------------------------
@@ -101,13 +88,13 @@ class GeocodingService extends AbstractService
     /**
      * Prepare the response.
      *
-     * @param  \Psr\Http\Message\ResponseInterface  $response
+     * @param  \Psr\Http\Message\ResponseInterface $response
      *
-     * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
+     * @return \Arcanedev\GeoLocation\Google\AbstractResponse
      */
     protected function prepareResponse(ResponseInterface $response)
     {
-        return new GeocodingResponse(
+        return new ElevationResponse(
             json_decode($response->getBody(), true)
         );
     }

@@ -15,6 +15,14 @@ use JsonSerializable;
 abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
 {
     /* -----------------------------------------------------------------
+     |  Constants
+     | -----------------------------------------------------------------
+     */
+
+    const STATUS_OK           = 'OK';
+    const STATUS_ZERO_RESULTS = 'ZERO_RESULTS';
+
+    /* -----------------------------------------------------------------
      |  Traits
      | -----------------------------------------------------------------
      */
@@ -63,6 +71,16 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
         return $this->data;
     }
 
+    /**
+     * Get the status.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->get('status');
+    }
+
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
@@ -88,6 +106,9 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
      */
     public function isOk()
     {
-        return $this->get('status') === 'OK';
+        return in_array($this->getStatus(), [
+            static::STATUS_OK,
+            static::STATUS_ZERO_RESULTS,
+        ]);
     }
 }
