@@ -48,6 +48,7 @@ class GeocodingServiceTest extends TestCase
     public function it_can_be_instantiated()
     {
         $expectations = [
+            \Arcanedev\GeoLocation\Google\AbstractService::class,
             \Arcanedev\GeoLocation\Google\Geocoding\GeocodingService::class,
         ];
 
@@ -72,7 +73,7 @@ class GeocodingServiceTest extends TestCase
         $position = $response->getLocationPosition();
 
         $this->assertGreaterThanOrEqual(48.85, $position->lat()->value());
-        $this->assertGreaterThanOrEqual(2.29, $position->long()->value());
+        $this->assertGreaterThanOrEqual(2.29, $position->lng()->value());
     }
 
     /** @test */

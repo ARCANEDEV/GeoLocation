@@ -1,8 +1,8 @@
 <?php namespace Arcanedev\GeoLocation\Google\Geocoding;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Position as PositionContract;
-use Arcanedev\GeoLocation\Entities\Position;
-use Arcanedev\GeoLocation\Google\AbstractWebService;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position as PositionContract;
+use Arcanedev\GeoLocation\Entities\Coordinates\Position;
+use Arcanedev\GeoLocation\Google\AbstractService;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @link     https://developers.google.com/maps/documentation/geocoding/intro
  */
-class GeocodingService extends AbstractWebService
+class GeocodingService extends AbstractService
 {
     /* -----------------------------------------------------------------
      |  Constants
@@ -55,7 +55,7 @@ class GeocodingService extends AbstractWebService
      */
     public function geocode($address, array $options = [])
     {
-        $url = static::BASE_URL.'?'.$this->prepareQuery([
+        $url = static::BASE_URL.$this->prepareQuery([
             'address' => urlencode($address)
         ]);
 
@@ -65,14 +65,14 @@ class GeocodingService extends AbstractWebService
     /**
      * Reverse geocoding (address lookup).
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $position
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $position
      * @param  array                                               $options
      *
      * @return \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse
      */
     public function reverse(PositionContract $position, array $options = [])
     {
-        $url = static::BASE_URL.'?'.$this->prepareQuery([
+        $url = static::BASE_URL.$this->prepareQuery([
             'latlng' => $this->parsePosition($position),
         ]);
 

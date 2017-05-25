@@ -52,6 +52,7 @@ class GeocodingResponseTest extends TestCase
             \Illuminate\Contracts\Support\Arrayable::class,
             \Illuminate\Contracts\Support\Jsonable::class,
             \JsonSerializable::class,
+            \Arcanedev\GeoLocation\Google\AbstractResponse::class,
             \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse::class,
         ];
 
@@ -133,13 +134,13 @@ class GeocodingResponseTest extends TestCase
     {
         $position = $this->response->getLocationPosition();
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Position::class, $position);
+        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Position::class, $position);
 
         $this->assertCoordinateInstance($position->lat());
-        $this->assertCoordinateInstance($position->long());
+        $this->assertCoordinateInstance($position->lng());
 
         $this->assertSame(48.8588871, $position->lat()->value());
-        $this->assertSame(2.2944861, $position->long()->value());
+        $this->assertSame(2.2944861, $position->lng()->value());
     }
 
     /** @test */
@@ -154,23 +155,23 @@ class GeocodingResponseTest extends TestCase
         $viewport = $this->response->getViewport();
         $expected = [
             'northeast' => [
-                'latitude'  => 48.860236080292,
-                'longitude' => 2.2958350802915,
+                'lat' => 48.860236080292,
+                'lng' => 2.2958350802915,
             ],
             'southwest' => [
-                'latitude'  => 48.857538119709,
-                'longitude' => 2.2931371197085,
+                'lat' => 48.857538119709,
+                'lng' => 2.2931371197085,
             ],
         ];
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Viewport::class, $viewport);
+        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Viewport::class, $viewport);
         $this->assertSame($expected, $viewport->toArray());
 
-        $this->assertSame($expected['northeast']['latitude'],  $viewport->getNorthEast()->lat()->value());
-        $this->assertSame($expected['northeast']['longitude'], $viewport->getNorthEast()->long()->value());
+        $this->assertSame($expected['northeast']['lat'],  $viewport->getNorthEast()->lat()->value());
+        $this->assertSame($expected['northeast']['lng'], $viewport->getNorthEast()->lng()->value());
 
-        $this->assertSame($expected['southwest']['latitude'],  $viewport->getSouthWest()->lat()->value());
-        $this->assertSame($expected['southwest']['longitude'], $viewport->getSouthWest()->long()->value());
+        $this->assertSame($expected['southwest']['lat'],  $viewport->getSouthWest()->lat()->value());
+        $this->assertSame($expected['southwest']['lng'], $viewport->getSouthWest()->lng()->value());
     }
 
     /** @test */
@@ -317,18 +318,18 @@ class GeocodingResponseTest extends TestCase
                 ],
             ],
             "location_position" => [
-                "latitude" => 48.8588871,
-                "longitude" => 2.2944861,
+                "lat" => 48.8588871,
+                "lng" => 2.2944861,
             ],
             "location_type" => "ROOFTOP",
             "viewport" => [
                 "northeast" => [
-                    "latitude" => 48.860236080292,
-                    "longitude" => 2.2958350802915,
+                    "lat" => 48.860236080292,
+                    "lng" => 2.2958350802915,
                 ],
                 "southwest" => [
-                    "latitude" => 48.857538119709,
-                    "longitude" => 2.2931371197085,
+                    "lat" => 48.857538119709,
+                    "lng" => 2.2931371197085,
                 ],
             ],
             "place_id" => "ChIJuX7JjuFv5kcRbLER0b_rtC4",

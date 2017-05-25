@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\GeoLocation\Tests\Calculators;
 
 use Arcanedev\GeoLocation\Calculators\DistanceCalculator;
-use Arcanedev\GeoLocation\Entities\Position;
+use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Entities\Spheres\Earth;
 use Arcanedev\GeoLocation\Tests\TestCase;
 
@@ -54,13 +54,21 @@ class DistanceCalculatorTest extends TestCase
         $start = Position::create(31.7917,7.0926);  // Morocco
         $end   = Position::create(46.2276, 2.2137); // France
 
-        $this->assertSame(0.0, $calc->calculate($start, $start)->getValue());
+        $expected = 0.0;
 
-        $this->assertSame(1658771.9796656023, $calc->calculate($start, $end)->getValue());
-        $this->assertSame(1658771.98, $calc->calculate($start, $end)->value());
+        $this->assertSame($expected, $calc->calculate($start, $start)->getValue());
+        $this->assertSame($expected, $calc->calculate($start, $start)->value());
 
-        $this->assertSame(1658771.9796656023, $calc->calculate($end, $start)->getValue());
-        $this->assertSame(1658771.98, $calc->calculate($end, $start)->value());
+        $this->assertSame($expected, $calc->calculate($end, $end)->getValue());
+        $this->assertSame($expected, $calc->calculate($end, $end)->value());
+
+        $expected = 1658771.9796656023;
+
+        $this->assertSame($expected, $calc->calculate($start, $end)->getValue());
+        $this->assertSame($expected, $calc->calculate($start, $end)->value());
+
+        $this->assertSame($expected, $calc->calculate($end, $start)->getValue());
+        $this->assertSame($expected, $calc->calculate($end, $start)->value());
     }
 
     /** @test */

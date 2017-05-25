@@ -25,4 +25,9 @@
         <log type="coverage-text" target="build/logs/coverage.txt"/>
         <log type="coverage-html" target="build/logs/coverage" charset="UTF-8" yui="true" highlight="true"/>
     </logging>
+    <php>
+        <env name="GOOGLE_MAPS_DIRECTIONS_KEY" value="YOUR_API_KEY"/>
+        <env name="GOOGLE_MAPS_DISTANCE_MATRIX_KEY" value="YOUR_API_KEY"/>
+        <env name="GOOGLE_MAPS_GEOCODING_KEY" value="YOUR_API_KEY"/>
+    </php>
 </phpunit>

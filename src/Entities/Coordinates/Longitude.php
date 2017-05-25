@@ -1,15 +1,15 @@
-<?php namespace Arcanedev\GeoLocation\Entities;
+<?php namespace Arcanedev\GeoLocation\Entities\Coordinates;
 
 /**
- * Class     Latitude
+ * Class     Longitude
  *
- * @package  Arcanedev\GeoLocation\Entities
+ * @package  Arcanedev\GeoLocation\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class Latitude extends AbstractCoordinate
+class Longitude extends AbstractCoordinate
 {
     /* -----------------------------------------------------------------
-     |  Getters & Setters
+     |  Constants
      | -----------------------------------------------------------------
      */
 
@@ -20,7 +20,7 @@ class Latitude extends AbstractCoordinate
      */
     public static function getMin()
     {
-        return -90.0;
+        return -180.0;
     }
 
     /**
@@ -30,6 +30,6 @@ class Latitude extends AbstractCoordinate
      */
     public static function getMax()
     {
-        return 90.0;
+        return 180.0;
     }
 }

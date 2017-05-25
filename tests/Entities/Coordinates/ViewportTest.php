@@ -1,12 +1,12 @@
-<?php namespace Arcanedev\GeoLocation\Tests\Entities;
+<?php namespace Arcanedev\GeoLocation\Tests\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Entities\Viewport;
+use Arcanedev\GeoLocation\Entities\Coordinates\Viewport;
 use Arcanedev\GeoLocation\Tests\TestCase;
 
 /**
  * Class     ViewportTest
  *
- * @package  Arcanedev\GeoLocation\Tests\Entities
+ * @package  Arcanedev\GeoLocation\Tests\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ViewportTest extends TestCase
@@ -15,6 +15,7 @@ class ViewportTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
@@ -22,8 +23,8 @@ class ViewportTest extends TestCase
         $viewport = new Viewport($position, $position);
 
         $expectations = [
-            \Arcanedev\GeoLocation\Contracts\Entities\Viewport::class,
-            \Arcanedev\GeoLocation\Entities\Viewport::class,
+            \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Viewport::class,
+            \Arcanedev\GeoLocation\Entities\Coordinates\Viewport::class,
         ];
 
         foreach ($expectations as $expected) {
@@ -38,8 +39,8 @@ class ViewportTest extends TestCase
         $viewport = Viewport::create($position, $position);
 
         $expectations = [
-            \Arcanedev\GeoLocation\Contracts\Entities\Viewport::class,
-            \Arcanedev\GeoLocation\Entities\Viewport::class,
+            \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Viewport::class,
+            \Arcanedev\GeoLocation\Entities\Coordinates\Viewport::class,
         ];
 
         foreach ($expectations as $expected) {
@@ -47,10 +48,10 @@ class ViewportTest extends TestCase
         }
 
         $this->assertSame($position->lat()->value(),  $viewport->getNorthEast()->lat()->value());
-        $this->assertSame($position->long()->value(), $viewport->getNorthEast()->long()->value());
+        $this->assertSame($position->lng()->value(), $viewport->getNorthEast()->lng()->value());
 
         $this->assertSame($position->lat()->value(),  $viewport->getSouthWest()->lat()->value());
-        $this->assertSame($position->long()->value(), $viewport->getSouthWest()->long()->value());
+        $this->assertSame($position->lng()->value(), $viewport->getSouthWest()->lng()->value());
     }
 
     /** @test */
@@ -73,7 +74,7 @@ class ViewportTest extends TestCase
         $position = $this->createPosition();
         $viewport = Viewport::create($position, $position);
 
-        $expected = '{"northeast":{"latitude":31.7917,"longitude":7.0926},"southwest":{"latitude":31.7917,"longitude":7.0926}}';
+        $expected = '{"northeast":{"lat":31.7917,"lng":7.0926},"southwest":{"lat":31.7917,"lng":7.0926}}';
 
         $this->assertJson($viewport->toJson());
 

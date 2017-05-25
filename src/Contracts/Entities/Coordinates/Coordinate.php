@@ -1,9 +1,9 @@
-<?php namespace Arcanedev\GeoLocation\Contracts\Entities;
+<?php namespace Arcanedev\GeoLocation\Contracts\Entities\Coordinates;
 
 /**
  * Interface     Coordinate
  *
- * @package  Arcanedev\GeoLocation\Contracts\Entities
+ * @package  Arcanedev\GeoLocation\Contracts\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface Coordinate

@@ -53,6 +53,7 @@ class DistanceMatrixResponseTest extends TestCase
             \Illuminate\Contracts\Support\Arrayable::class,
             \Illuminate\Contracts\Support\Jsonable::class,
             \JsonSerializable::class,
+            \Arcanedev\GeoLocation\Google\AbstractResponse::class,
             \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse::class,
         ];
 
@@ -88,15 +89,15 @@ class DistanceMatrixResponseTest extends TestCase
     /** @test */
     public function it_can_get_distance()
     {
-        $this->assertSame('4,508 km', $this->response->getDistance());
-        $this->assertSame(4508227, $this->response->getDistance(false));
+        $this->assertSame('4,508 km', $this->response->distance());
+        $this->assertSame(4508227, $this->response->distance(false));
     }
 
     /** @test */
     public function it_can_get_duration()
     {
-        $this->assertSame('1 day 17 hours', $this->response->getDuration());
-        $this->assertSame(146292, $this->response->getDuration(false));
+        $this->assertSame('1 day 17 hours', $this->response->duration());
+        $this->assertSame(146292, $this->response->duration(false));
     }
 
     /** @test */

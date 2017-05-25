@@ -3,7 +3,7 @@
     "description": "This package allows you to estimate the real-world geographic location of an object.",
     "homepage":    "https://github.com/ARCANEDEV/GeoLocation",
     "keywords":    [
-        "arcanedev", "laravel", "geo", "latitude", "longitude", "distance", "position", "coordinate"
+        "arcanedev", "laravel", "geo", "geocoding", "latitude", "longitude", "distance", "position", "coordinate", "google-maps-api", "directions"
     ],
     "authors":  [
         {

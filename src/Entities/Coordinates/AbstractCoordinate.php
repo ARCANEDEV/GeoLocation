@@ -1,12 +1,12 @@
-<?php namespace Arcanedev\GeoLocation\Entities;
+<?php namespace Arcanedev\GeoLocation\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Coordinate;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate;
 use Arcanedev\GeoLocation\Exceptions\InvalidCoordinateException;
 
 /**
  * Class     AbstractCoordinate
  *
- * @package  Arcanedev\GeoLocation\Entities
+ * @package  Arcanedev\GeoLocation\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class AbstractCoordinate implements Coordinate

@@ -1,8 +1,9 @@
 <?php namespace Arcanedev\GeoLocation\Calculators;
 
 use Arcanedev\GeoLocation\Contracts\Calculators\DistanceCalculator as DistanceCalculatorContract;
-use Arcanedev\GeoLocation\Contracts\Entities\Position;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Contracts\Entities\Sphere;
+use Arcanedev\GeoLocation\Entities\Measures\Distance;
 use Arcanedev\GeoLocation\Entities\Spheres\Earth;
 
 /**
@@ -56,19 +57,19 @@ class DistanceCalculator implements DistanceCalculatorContract
     /**
      * Calculate the distance between two positions.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $start
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $end
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Calculators\Distance
+     * @return \Arcanedev\GeoLocation\Entities\Measures\Distance
      */
     public function calculate(Position $start, Position $end)
     {
-        $deltaLatitude  = deg2rad(
+        $deltaLatitude = deg2rad(
             $start->lat()->value() - $end->lat()->value()
         );
 
         $deltaLongitude = deg2rad(
-            $start->long()->value() - $end->long()->value()
+            $start->lng()->value() - $end->lng()->value()
         );
 
         $angle = asin(
@@ -80,22 +81,22 @@ class DistanceCalculator implements DistanceCalculatorContract
             )
         ) * 2;
 
-        return new Distance(
-            $angle * $this->sphere->radius()
-        );
+        $value = $angle * $this->sphere->radius();
+
+        return new Distance("{$value} meters", $value);
     }
 
     /**
      * Calculate the numeric distance between two positions.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $start
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Position  $end
-     * @param  int                                                 $precision
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $start
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position  $end
+     * @param  int                                                             $precision
      *
      * @return float
      */
     public function distance(Position $start, Position $end, $precision = 2)
     {
-        return $this->calculate($start, $end)->value($precision);
+        return round($this->calculate($start, $end)->value(), $precision);
     }
 }

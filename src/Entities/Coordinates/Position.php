@@ -1,16 +1,26 @@
-<?php namespace Arcanedev\GeoLocation\Entities;
+<?php namespace Arcanedev\GeoLocation\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Contracts\Entities\Coordinate;
-use Arcanedev\GeoLocation\Contracts\Entities\Position as PositionContract;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate;
+use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position as PositionContract;
+use Arcanedev\GeoLocation\Entities\Coordinates\Latitude;
+use Arcanedev\GeoLocation\Entities\Coordinates\Longitude;
+use Arcanedev\GeoLocation\Traits\CanBeJsonable;
 
 /**
  * Class     Position
  *
- * @package  Arcanedev\GeoLocation\Entities
+ * @package  Arcanedev\GeoLocation\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Position implements PositionContract
 {
+    /* -----------------------------------------------------------------
+     |  Traits
+     | -----------------------------------------------------------------
+     */
+
+    use CanBeJsonable;
+
     /* -----------------------------------------------------------------
      |  Properties
      | -----------------------------------------------------------------
@@ -19,14 +29,14 @@ class Position implements PositionContract
     /**
      * The latitude coordinate.
      *
-     * @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
     protected $latitude;
 
     /**
      * The longitude coordinate.
      *
-     * @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @var  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
     protected $longitude;
 
@@ -38,8 +48,8 @@ class Position implements PositionContract
     /**
      * Position constructor.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate  $latitude
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate  $longitude
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate  $latitude
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate  $longitude
      */
     public function __construct(Coordinate $latitude, Coordinate $longitude)
     {
@@ -55,7 +65,7 @@ class Position implements PositionContract
     /**
      * Get the latitude coordinate.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
     public function getLatitude()
     {
@@ -65,7 +75,7 @@ class Position implements PositionContract
     /**
      * Get the latitude coordinate (alias).
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
     public function lat()
     {
@@ -75,7 +85,7 @@ class Position implements PositionContract
     /**
      * Set the latitude coordinate.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate  $latitude
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate  $latitude
      *
      * @return self
      */
@@ -89,7 +99,7 @@ class Position implements PositionContract
     /**
      * Get the longitude coordinate.
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
     public function getLongitude()
     {
@@ -99,9 +109,9 @@ class Position implements PositionContract
     /**
      * Get the longitude coordinate (alias).
      *
-     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinate
+     * @return \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate
      */
-    public function long()
+    public function lng()
     {
         return $this->getLongitude();
     }
@@ -109,7 +119,7 @@ class Position implements PositionContract
     /**
      * Set the longitude coordinate.
      *
-     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinate  $longitude
+     * @param  \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Coordinate  $longitude
      *
      * @return self
      */
@@ -142,25 +152,15 @@ class Position implements PositionContract
     }
 
     /**
-     * Convert the object to its JSON representation.
+     * Create position instance from array.
      *
-     * @param  int  $options
+     * @param  array  $location
      *
-     * @return string
+     * @return self
      */
-    public function toJson($options = 0)
+    public static function createFromArray(array $location)
     {
-        return json_encode($this->jsonSerialize(), $options);
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
+        return static::create($location['lat'], $location['lng']);
     }
 
     /**
@@ -171,8 +171,8 @@ class Position implements PositionContract
     public function toArray()
     {
         return [
-            'latitude'  => $this->getLatitude()->value(),
-            'longitude' => $this->getLongitude()->value(),
+            'lat' => $this->getLatitude()->value(),
+            'lng' => $this->getLongitude()->value(),
         ];
     }
 }

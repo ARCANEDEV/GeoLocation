@@ -1,12 +1,12 @@
-<?php namespace Arcanedev\GeoLocation\Tests\Entities;
+<?php namespace Arcanedev\GeoLocation\Tests\Entities\Coordinates;
 
-use Arcanedev\GeoLocation\Entities\Position;
+use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Tests\TestCase;
 
 /**
  * Class     PositionTest
  *
- * @package  Arcanedev\GeoLocation\Tests\Entities
+ * @package  Arcanedev\GeoLocation\Tests\Entities\Coordinates
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class PositionTest extends TestCase
@@ -21,8 +21,8 @@ class PositionTest extends TestCase
         $position = $this->createPosition();
 
         $expectations = [
-            \Arcanedev\GeoLocation\Contracts\Entities\Position::class,
-            \Arcanedev\GeoLocation\Entities\Position::class,
+            \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position::class,
+            \Arcanedev\GeoLocation\Entities\Coordinates\Position::class,
         ];
 
         foreach ($expectations as $expected) {
@@ -39,8 +39,8 @@ class PositionTest extends TestCase
         );
 
         $expectations = [
-            \Arcanedev\GeoLocation\Contracts\Entities\Position::class,
-            \Arcanedev\GeoLocation\Entities\Position::class,
+            \Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position::class,
+            \Arcanedev\GeoLocation\Entities\Coordinates\Position::class,
         ];
 
         foreach ($expectations as $expected) {
@@ -48,7 +48,7 @@ class PositionTest extends TestCase
         }
 
         $this->assertSame($lat, $position->lat()->value());
-        $this->assertSame($long, $position->long()->value());
+        $this->assertSame($long, $position->lng()->value());
     }
 
     /** @test */
@@ -76,17 +76,17 @@ class PositionTest extends TestCase
         $position = $this->createPosition();
 
         $this->assertCoordinateInstance($position->getLongitude());
-        $this->assertCoordinateInstance($position->long());
+        $this->assertCoordinateInstance($position->lng());
 
         $this->assertSame(7.0926, $position->getLongitude()->value());
-        $this->assertSame(7.0926, $position->long()->value());
+        $this->assertSame(7.0926, $position->lng()->value());
 
         $long = $this->createLongitude(12.3456);
 
         $position->setLongitude($long);
 
         $this->assertSame(12.3456, $position->getLongitude()->value());
-        $this->assertSame(12.3456, $position->long()->value());
+        $this->assertSame(12.3456, $position->lng()->value());
     }
 
     /** @test */
@@ -95,8 +95,8 @@ class PositionTest extends TestCase
         $position = $this->createPosition();
 
         $expected = [
-            'latitude'  => 31.7917,
-            'longitude' => 7.0926,
+            'lat' => 31.7917,
+            'lng' => 7.0926,
         ];
 
         $this->assertSame($expected, $position->toArray());
@@ -106,7 +106,7 @@ class PositionTest extends TestCase
     public function it_can_convert_to_json()
     {
         $position = $this->createPosition();
-        $expected = '{"latitude":31.7917,"longitude":7.0926}';
+        $expected = '{"lat":31.7917,"lng":7.0926}';
 
         $this->assertJson($position->toJson());
 
