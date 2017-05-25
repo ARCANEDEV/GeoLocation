@@ -137,12 +137,11 @@ class DistanceMatrixService extends AbstractService
      */
     protected function getDefaultQueryParams()
     {
-        return [
-            'mode'         => $this->mode,
-            'language'     => $this->language,
-            'units'        => $this->units,
-            'key'          => $this->key,
-        ];
+        return array_merge([
+            'mode'     => $this->mode,
+            'language' => $this->language,
+            'units'    => $this->units,
+        ], parent::getDefaultQueryParams());
     }
 
     /**

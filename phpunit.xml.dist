@@ -28,6 +28,7 @@
     <php>
         <env name="GOOGLE_MAPS_DIRECTIONS_KEY" value="YOUR_API_KEY"/>
         <env name="GOOGLE_MAPS_DISTANCE_MATRIX_KEY" value="YOUR_API_KEY"/>
+        <env name="GOOGLE_MAPS_ELEVATION_KEY" value="YOUR_API_KEY"/>
         <env name="GOOGLE_MAPS_GEOCODING_KEY" value="YOUR_API_KEY"/>
     </php>
 </phpunit>

@@ -112,7 +112,12 @@ abstract class AbstractService
      *
      * @return array
      */
-    abstract protected function getDefaultQueryParams();
+    protected function getDefaultQueryParams()
+    {
+        return [
+            'key' => $this->key,
+        ];
+    }
 
     /**
      * Prepare the response.
