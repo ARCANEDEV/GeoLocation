@@ -54,7 +54,7 @@ class ElevationServiceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->service);
+            static::assertInstanceOf($expected, $this->service);
         }
     }
 
@@ -64,20 +64,20 @@ class ElevationServiceTest extends TestCase
         $location = Position::create(40.714728, -73.998672);
         $response = $this->service->location($location);
 
-        $this->assertTrue($response->isOk());
+        static::assertTrue($response->isOk());
 
         $elevations = $response->elevations();
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Google\Elevation\Entities\ElevationCollection::class, $elevations);
-        $this->assertCount(1, $elevations);
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Google\Elevation\Entities\ElevationCollection::class, $elevations);
+        static::assertCount(1, $elevations);
 
         /** @var  \Arcanedev\GeoLocation\Google\Elevation\Entities\Elevation  $elevation */
         $elevation = $elevations->first();
 
-        $this->assertGreaterThan(0, $elevation->value());
-        $this->assertSame($location->lat()->value(), $elevation->location()->lat()->value());
-        $this->assertSame($location->lng()->value(), $elevation->location()->lng()->value());
-        $this->assertGreaterThan(0, $elevation->resolution());
+        static::assertGreaterThan(0, $elevation->value());
+        static::assertSame($location->lat()->value(), $elevation->location()->lat()->value());
+        static::assertSame($location->lng()->value(), $elevation->location()->lng()->value());
+        static::assertGreaterThan(0, $elevation->resolution());
     }
 
     /** @test */
@@ -88,28 +88,28 @@ class ElevationServiceTest extends TestCase
 
         $response = $this->service->path([$one, $two]);
 
-        $this->assertTrue($response->isOk());
+        static::assertTrue($response->isOk());
 
         $elevations = $response->elevations();
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Google\Elevation\Entities\ElevationCollection::class, $elevations);
-        $this->assertCount(2, $elevations);
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Google\Elevation\Entities\ElevationCollection::class, $elevations);
+        static::assertCount(2, $elevations);
 
         /** @var  \Arcanedev\GeoLocation\Google\Elevation\Entities\Elevation  $elevation */
         $elevation = $elevations->first();
 
-        $this->assertGreaterThan(0, $elevation->value());
-        $this->assertSame($one->lat()->value(), $elevation->location()->lat()->value());
-        $this->assertSame($one->lng()->value(), $elevation->location()->lng()->value());
-        $this->assertGreaterThan(0, $elevation->resolution());
+        static::assertGreaterThan(0, $elevation->value());
+        static::assertSame($one->lat()->value(), $elevation->location()->lat()->value());
+        static::assertSame($one->lng()->value(), $elevation->location()->lng()->value());
+        static::assertGreaterThan(0, $elevation->resolution());
 
         /** @var  \Arcanedev\GeoLocation\Google\Elevation\Entities\Elevation  $elevation */
         $elevation = $elevations->last();
 
-        $this->assertGreaterThan(0, $elevation->value());
-        $this->assertSame($two->lat()->value(), $elevation->location()->lat()->value());
-        $this->assertSame($two->lng()->value(), $elevation->location()->lng()->value());
-        $this->assertGreaterThan(0, $elevation->resolution());
+        static::assertGreaterThan(0, $elevation->value());
+        static::assertSame($two->lat()->value(), $elevation->location()->lat()->value());
+        static::assertSame($two->lng()->value(), $elevation->location()->lng()->value());
+        static::assertGreaterThan(0, $elevation->resolution());
     }
 
     /** @test */
@@ -118,16 +118,16 @@ class ElevationServiceTest extends TestCase
         $location = Position::create(40.714728, -73.998672);
         $response = $this->service->location($location);
 
-        $this->assertTrue($response->isOk());
+        static::assertTrue($response->isOk());
 
         $array = $response->toArray();
 
-        $this->assertInternalType('array', $array[0]);
+        static::assertInternalType('array', $array[0]);
 
         $first = $array[0];
 
-        $this->assertArrayHasKey('elevation',  $first);
-        $this->assertArrayHasKey('location',   $first);
-        $this->assertArrayHasKey('resolution', $first);
+        static::assertArrayHasKey('elevation',  $first);
+        static::assertArrayHasKey('location',   $first);
+        static::assertArrayHasKey('resolution', $first);
     }
 }

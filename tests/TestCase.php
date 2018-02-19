@@ -118,7 +118,7 @@ abstract class TestCase extends BaseTestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $coordinate);
+            static::assertInstanceOf($expected, $coordinate);
         }
     }
 
@@ -129,6 +129,6 @@ abstract class TestCase extends BaseTestCase
      */
     public function getFixturePath()
     {
-        return __DIR__ . '/_fixtures';
+        return __DIR__.'/_fixtures';
     }
 }

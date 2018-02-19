@@ -16,13 +16,14 @@
     "type":    "library",
     "license": "MIT",
     "require": {
-        "php":               ">=5.6",
-        "arcanedev/support": "~4.0"
+        "php":               ">=7.0",
+        "arcanedev/support": "~4.2.0"
     },
     "require-dev": {
-        "phpunit/phpcov":    "~3.0",
-        "phpunit/phpunit":   "~5.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "orchestra/testbench": "~3.5.0",
+        "phpunit/phpcov":      "~4.0",
+        "phpunit/phpunit":     "~6.0",
+        "guzzlehttp/guzzle":   "~6.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,17 +35,7 @@
             "Arcanedev\\GeoLocation\\Tests\\": "tests/"
         }
     },
-    "scripts": {
-        "testbench": "composer require --dev \"orchestra/testbench=~3.0\""
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
-    },
     "suggest": {
-        "guzzlehttp/guzzle": "(~6.0) Required to use the Google webservices."
-    },
-    "minimum-stability": "dev",
-    "prefer-stable" : true
+        "guzzlehttp/guzzle": "(~6.0) Required if you're going to use the Google webservices."
+    }
 }

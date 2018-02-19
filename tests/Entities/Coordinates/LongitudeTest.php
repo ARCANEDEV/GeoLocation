@@ -21,8 +21,8 @@ class LongitudeTest extends TestCase
     {
         $long = $this->createLongitude();
 
-        $this->assertCoordinateInstance($long);
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Longitude::class, $long);
+        static::assertCoordinateInstance($long);
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Longitude::class, $long);
     }
 
     /** @test */
@@ -31,20 +31,20 @@ class LongitudeTest extends TestCase
         $long  = $this->createLongitude();
         $value = 7.0926;
 
-        $this->assertSame($value, $long->getValue());
-        $this->assertSame($value, $long->value());
+        static::assertSame($value, $long->getValue());
+        static::assertSame($value, $long->value());
 
         $long->setValue(0);
 
-        $this->assertSame(0.0, $long->getValue());
-        $this->assertSame(0.0, $long->value());
+        static::assertSame(0.0, $long->getValue());
+        static::assertSame(0.0, $long->value());
     }
 
     /** @test */
     public function it_can_get_min_and_max_values()
     {
-        $this->assertSame(-180.0, Longitude::getMin());
-        $this->assertSame(180.0, Longitude::getMax());
+        static::assertSame(-180.0, Longitude::getMin());
+        static::assertSame(180.0, Longitude::getMax());
     }
 
     /**

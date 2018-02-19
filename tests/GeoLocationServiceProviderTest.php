@@ -14,6 +14,7 @@ class GeoLocationServiceProviderTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
@@ -27,7 +28,7 @@ class GeoLocationServiceProviderTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $provider);
+            static::assertInstanceOf($expected, $provider);
         }
     }
 
@@ -36,7 +37,7 @@ class GeoLocationServiceProviderTest extends TestCase
     {
         $expected = [];
 
-        $this->assertSame($expected, $this->getServiceProvider()->provides());
+        static::assertSame($expected, $this->getServiceProvider()->provides());
     }
 
     /* -----------------------------------------------------------------

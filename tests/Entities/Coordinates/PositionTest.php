@@ -26,7 +26,7 @@ class PositionTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $position);
+            static::assertInstanceOf($expected, $position);
         }
     }
 
@@ -44,11 +44,11 @@ class PositionTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $position);
+            static::assertInstanceOf($expected, $position);
         }
 
-        $this->assertSame($lat, $position->lat()->value());
-        $this->assertSame($long, $position->lng()->value());
+        static::assertSame($lat, $position->lat()->value());
+        static::assertSame($long, $position->lng()->value());
     }
 
     /** @test */
@@ -56,18 +56,18 @@ class PositionTest extends TestCase
     {
         $position = $this->createPosition();
 
-        $this->assertCoordinateInstance($position->getLatitude());
-        $this->assertCoordinateInstance($position->lat());
+        static::assertCoordinateInstance($position->getLatitude());
+        static::assertCoordinateInstance($position->lat());
 
-        $this->assertSame(31.7917, $position->getLatitude()->value());
-        $this->assertSame(31.7917, $position->lat()->value());
+        static::assertSame(31.7917, $position->getLatitude()->value());
+        static::assertSame(31.7917, $position->lat()->value());
 
         $lat = $this->createLongitude(12.3456);
 
         $position->setLatitude($lat);
 
-        $this->assertSame(12.3456, $position->getLatitude()->value());
-        $this->assertSame(12.3456, $position->lat()->value());
+        static::assertSame(12.3456, $position->getLatitude()->value());
+        static::assertSame(12.3456, $position->lat()->value());
     }
 
     /** @test */
@@ -75,18 +75,18 @@ class PositionTest extends TestCase
     {
         $position = $this->createPosition();
 
-        $this->assertCoordinateInstance($position->getLongitude());
-        $this->assertCoordinateInstance($position->lng());
+        static::assertCoordinateInstance($position->getLongitude());
+        static::assertCoordinateInstance($position->lng());
 
-        $this->assertSame(7.0926, $position->getLongitude()->value());
-        $this->assertSame(7.0926, $position->lng()->value());
+        static::assertSame(7.0926, $position->getLongitude()->value());
+        static::assertSame(7.0926, $position->lng()->value());
 
         $long = $this->createLongitude(12.3456);
 
         $position->setLongitude($long);
 
-        $this->assertSame(12.3456, $position->getLongitude()->value());
-        $this->assertSame(12.3456, $position->lng()->value());
+        static::assertSame(12.3456, $position->getLongitude()->value());
+        static::assertSame(12.3456, $position->lng()->value());
     }
 
     /** @test */
@@ -99,7 +99,7 @@ class PositionTest extends TestCase
             'lng' => 7.0926,
         ];
 
-        $this->assertSame($expected, $position->toArray());
+        static::assertSame($expected, $position->toArray());
     }
 
     /** @test */
@@ -108,9 +108,9 @@ class PositionTest extends TestCase
         $position = $this->createPosition();
         $expected = '{"lat":31.7917,"lng":7.0926}';
 
-        $this->assertJson($position->toJson());
+        static::assertJson($position->toJson());
 
-        $this->assertSame($expected, $position->toJson());
-        $this->assertSame($expected, json_encode($position));
+        static::assertSame($expected, $position->toJson());
+        static::assertSame($expected, json_encode($position));
     }
 }

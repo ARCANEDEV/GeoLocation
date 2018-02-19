@@ -15,6 +15,7 @@ class EarthTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
@@ -26,7 +27,7 @@ class EarthTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $sphere);
+            static::assertInstanceOf($expected, $sphere);
         }
     }
 
@@ -35,6 +36,6 @@ class EarthTest extends TestCase
     {
         $sphere = new Earth;
 
-        $this->assertSame(6371000.0, $sphere->radius());
+        static::assertSame(6371000.0, $sphere->radius());
     }
 }
