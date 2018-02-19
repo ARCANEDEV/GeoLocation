@@ -29,7 +29,7 @@ class DurationTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -46,7 +46,7 @@ class DurationTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -63,7 +63,7 @@ class DurationTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -72,11 +72,11 @@ class DurationTest extends TestCase
     {
         $distance = Duration::make('1 hour', 60);
 
-        $this->assertSame(60, $distance->value());
-        $this->assertSame(60, $distance->getValue());
+        static::assertSame(60, $distance->value());
+        static::assertSame(60, $distance->getValue());
 
-        $this->assertSame('1 hour', $distance->text());
-        $this->assertSame('1 hour', $distance->getText());
+        static::assertSame('1 hour', $distance->text());
+        static::assertSame('1 hour', $distance->getText());
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class DurationTest extends TestCase
     {
         $distance = Duration::make('1 hour', 60);
 
-        $this->assertSame(['text' => '1 hour', 'value' => 60], $distance->toArray());
+        static::assertSame(['text' => '1 hour', 'value' => 60], $distance->toArray());
     }
 
     /** @test */
@@ -96,7 +96,7 @@ class DurationTest extends TestCase
 
         $expected = json_encode($data);
 
-        $this->assertSame($expected, $distance->toJson());
-        $this->assertSame($expected, json_encode($distance));
+        static::assertSame($expected, $distance->toJson());
+        static::assertSame($expected, json_encode($distance));
     }
 }

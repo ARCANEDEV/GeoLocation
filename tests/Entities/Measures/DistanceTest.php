@@ -29,7 +29,7 @@ class DistanceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -46,7 +46,7 @@ class DistanceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -63,7 +63,7 @@ class DistanceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $distance);
+            static::assertInstanceOf($expected, $distance);
         }
     }
 
@@ -72,11 +72,11 @@ class DistanceTest extends TestCase
     {
         $distance = Distance::make('1 km', 1000);
 
-        $this->assertSame(1000, $distance->value());
-        $this->assertSame(1000, $distance->getValue());
+        static::assertSame(1000, $distance->value());
+        static::assertSame(1000, $distance->getValue());
 
-        $this->assertSame('1 km', $distance->text());
-        $this->assertSame('1 km', $distance->getText());
+        static::assertSame('1 km', $distance->text());
+        static::assertSame('1 km', $distance->getText());
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class DistanceTest extends TestCase
     {
         $distance = Distance::make('1 km', 1000);
 
-        $this->assertSame(['text' => '1 km', 'value' => 1000], $distance->toArray());
+        static::assertSame(['text' => '1 km', 'value' => 1000], $distance->toArray());
     }
 
     /** @test */
@@ -96,7 +96,7 @@ class DistanceTest extends TestCase
 
         $expected = json_encode($data);
 
-        $this->assertSame($expected, $distance->toJson());
-        $this->assertSame($expected, json_encode($distance));
+        static::assertSame($expected, $distance->toJson());
+        static::assertSame($expected, json_encode($distance));
     }
 }

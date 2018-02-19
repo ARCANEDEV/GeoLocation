@@ -53,7 +53,7 @@ class DistanceMatrixServiceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->service);
+            static::assertInstanceOf($expected, $this->service);
         }
     }
 
@@ -65,24 +65,24 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertInstanceOf(DistanceMatrixResponse::class, $response);
-        $this->assertTrue($response->isOk());
+        static::assertInstanceOf(DistanceMatrixResponse::class, $response);
+        static::assertTrue($response->isOk());
 
-        $this->assertSame(
+        static::assertSame(
             '17 Hudson River Waterfront Walk, Jersey City, NJ 07305, USA',
             $response->getOriginAddress()
         );
 
-        $this->assertSame(
-            'Mount Lee Dr, Los Angeles, CA 90068, USA',
+        static::assertSame(
+            '6084-6086 Mulholland Hwy, Los Angeles, CA 90068, USA',
             $response->getDestinationAddress()
         );
 
-        $this->assertSame('4,508 km', $response->distance());
-        $this->assertGreaterThanOrEqual(4508227, $response->distance(false));
+        static::assertSame('4,504 km', $response->distance());
+        static::assertGreaterThanOrEqual(4504133, $response->distance(false));
 
-        $this->assertSame('1 day 17 hours', $response->duration());
-        $this->assertGreaterThanOrEqual(146292, $response->duration(false));
+        static::assertSame('1 day 17 hours', $response->duration());
+        static::assertGreaterThanOrEqual(146000, $response->duration(false));
     }
 
     /** @test */
@@ -95,16 +95,16 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '17 Hudson River Waterfront Walk, Jersey City, NJ 07305, États-Unis',
             $response->getOriginAddress()
         );
 
-        $this->assertSame(
-            'Mount Lee Dr, Los Angeles, CA 90068, États-Unis',
+        static::assertSame(
+            '6084-6086 Mulholland Hwy, Los Angeles, CA 90068, États-Unis',
             $response->getDestinationAddress()
         );
-        $this->assertSame('1 jour 17 heures', $response->duration());
+        static::assertSame('1 jour 17 heures', $response->duration());
     }
 
     /** @test */
@@ -117,8 +117,8 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertGreaterThanOrEqual(4454000, $response->distance(false));
-        $this->assertGreaterThanOrEqual(3291400, $response->duration(false));
+        static::assertGreaterThanOrEqual(4454000, $response->distance(false));
+        static::assertGreaterThanOrEqual(3291400, $response->duration(false));
     }
 
     /**
@@ -142,7 +142,7 @@ class DistanceMatrixServiceTest extends TestCase
             $this->getEndPosition()
         );
 
-        $this->assertSame('2,801 mi', $response->distance());
+        static::assertSame('2,799 mi', $response->distance());
     }
 
     /**

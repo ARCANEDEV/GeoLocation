@@ -58,14 +58,14 @@ class DistanceMatrixResponseTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->response);
+            static::assertInstanceOf($expected, $this->response);
         }
     }
 
     /** @test */
     public function it_can_get_raw_data()
     {
-        $this->assertSame($this->getServiceResponse(), $this->response->getRaw());
+        static::assertSame($this->getServiceResponse(), $this->response->getRaw());
     }
 
     /** @test */
@@ -73,8 +73,8 @@ class DistanceMatrixResponseTest extends TestCase
     {
         $expected = '17 Hudson River Waterfront Walk, Jersey City, NJ 07305, USA';
 
-        $this->assertSame([$expected], $this->response->getOriginAddresses());
-        $this->assertSame($expected, $this->response->getOriginAddress());
+        static::assertSame([$expected], $this->response->getOriginAddresses());
+        static::assertSame($expected, $this->response->getOriginAddress());
     }
 
     /** @test */
@@ -82,32 +82,32 @@ class DistanceMatrixResponseTest extends TestCase
     {
         $expected = 'Mount Lee Dr, Los Angeles, CA 90068, USA';
 
-        $this->assertSame([$expected], $this->response->getDestinationAddresses());
-        $this->assertSame($expected, $this->response->getDestinationAddress());
+        static::assertSame([$expected], $this->response->getDestinationAddresses());
+        static::assertSame($expected, $this->response->getDestinationAddress());
     }
 
     /** @test */
     public function it_can_get_distance()
     {
-        $this->assertSame('4,508 km', $this->response->distance());
-        $this->assertSame(4508227, $this->response->distance(false));
+        static::assertSame('4,508 km', $this->response->distance());
+        static::assertSame(4508227, $this->response->distance(false));
     }
 
     /** @test */
     public function it_can_get_duration()
     {
-        $this->assertSame('1 day 17 hours', $this->response->duration());
-        $this->assertSame(146292, $this->response->duration(false));
+        static::assertSame('1 day 17 hours', $this->response->duration());
+        static::assertSame(146292, $this->response->duration(false));
     }
 
     /** @test */
     public function it_can_check_if_response_is_ok()
     {
-        $this->assertTrue($this->response->isOk());
+        static::assertTrue($this->response->isOk());
 
         $this->response = new DistanceMatrixResponse([]);
 
-        $this->assertFalse($this->response->isOk());
+        static::assertFalse($this->response->isOk());
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class DistanceMatrixResponseTest extends TestCase
     {
         $expected = $this->expectedArray();
 
-        $this->assertSame($expected, $this->response->toArray());
+        static::assertSame($expected, $this->response->toArray());
     }
 
     /** @test */
@@ -123,13 +123,13 @@ class DistanceMatrixResponseTest extends TestCase
     {
         $json = json_encode($this->response);
 
-        $this->assertJson($json);
-        $this->assertSame(json_encode($this->expectedArray()), $json);
+        static::assertJson($json);
+        static::assertSame(json_encode($this->expectedArray()), $json);
 
         $json = $this->response->toJson();
 
-        $this->assertJson($json);
-        $this->assertSame(json_encode($this->expectedArray()), $json);
+        static::assertJson($json);
+        static::assertSame(json_encode($this->expectedArray()), $json);
     }
 
     /* -----------------------------------------------------------------

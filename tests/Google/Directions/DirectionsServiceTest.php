@@ -54,7 +54,7 @@ class DirectionsServiceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->service);
+            static::assertInstanceOf($expected, $this->service);
         }
     }
 
@@ -65,8 +65,8 @@ class DirectionsServiceTest extends TestCase
                                   ->to('Marseille, France')
                                   ->directions();
 
-        $this->assertTrue($response->isOk());
-        $this->assertFalse($response->getRoutes()->isEmpty());
+        static::assertTrue($response->isOk());
+        static::assertFalse($response->getRoutes()->isEmpty());
     }
 
     /** @test */
@@ -76,8 +76,8 @@ class DirectionsServiceTest extends TestCase
                                   ->toCoordinates(43.296026, 5.369231)
                                   ->directions();
 
-        $this->assertTrue($response->isOk());
-        $this->assertFalse($response->getRoutes()->isEmpty());
+        static::assertTrue($response->isOk());
+        static::assertFalse($response->getRoutes()->isEmpty());
     }
 
     /** @test */
@@ -87,8 +87,8 @@ class DirectionsServiceTest extends TestCase
                                   ->toPosition(Position::create(43.296026, 5.369231))
                                   ->directions();
 
-        $this->assertTrue($response->isOk());
-        $this->assertFalse($response->getRoutes()->isEmpty());
+        static::assertTrue($response->isOk());
+        static::assertFalse($response->getRoutes()->isEmpty());
     }
 
     /** @test */
@@ -98,7 +98,7 @@ class DirectionsServiceTest extends TestCase
                                   ->toPlace('ChIJM1PaREO_yRIRIAKX_aUZCAQ')
                                   ->directions();
 
-        $this->assertTrue($response->isOk());
-        $this->assertFalse($response->getRoutes()->isEmpty());
+        static::assertTrue($response->isOk());
+        static::assertFalse($response->getRoutes()->isEmpty());
     }
 }

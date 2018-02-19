@@ -28,7 +28,7 @@ class ViewportTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $viewport);
+            static::assertInstanceOf($expected, $viewport);
         }
     }
 
@@ -44,14 +44,14 @@ class ViewportTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $viewport);
+            static::assertInstanceOf($expected, $viewport);
         }
 
-        $this->assertSame($position->lat()->value(),  $viewport->getNorthEast()->lat()->value());
-        $this->assertSame($position->lng()->value(), $viewport->getNorthEast()->lng()->value());
+        static::assertSame($position->lat()->value(),  $viewport->getNorthEast()->lat()->value());
+        static::assertSame($position->lng()->value(), $viewport->getNorthEast()->lng()->value());
 
-        $this->assertSame($position->lat()->value(),  $viewport->getSouthWest()->lat()->value());
-        $this->assertSame($position->lng()->value(), $viewport->getSouthWest()->lng()->value());
+        static::assertSame($position->lat()->value(),  $viewport->getSouthWest()->lat()->value());
+        static::assertSame($position->lng()->value(), $viewport->getSouthWest()->lng()->value());
     }
 
     /** @test */
@@ -65,7 +65,7 @@ class ViewportTest extends TestCase
             'southwest' => $position->toArray(),
         ];
 
-        $this->assertSame($expected, $viewport->toArray());
+        static::assertSame($expected, $viewport->toArray());
     }
 
     /** @test */
@@ -76,9 +76,9 @@ class ViewportTest extends TestCase
 
         $expected = '{"northeast":{"lat":31.7917,"lng":7.0926},"southwest":{"lat":31.7917,"lng":7.0926}}';
 
-        $this->assertJson($viewport->toJson());
+        static::assertJson($viewport->toJson());
 
-        $this->assertSame($expected, $viewport->toJson());
-        $this->assertSame($expected, json_encode($viewport));
+        static::assertSame($expected, $viewport->toJson());
+        static::assertSame($expected, json_encode($viewport));
     }
 }

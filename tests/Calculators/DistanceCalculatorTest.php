@@ -28,7 +28,7 @@ class DistanceCalculatorTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $calculator);
+            static::assertInstanceOf($expected, $calculator);
         }
     }
 
@@ -43,7 +43,7 @@ class DistanceCalculatorTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $calculator);
+            static::assertInstanceOf($expected, $calculator);
         }
     }
 
@@ -56,19 +56,19 @@ class DistanceCalculatorTest extends TestCase
 
         $expected = 0.0;
 
-        $this->assertSame($expected, $calc->calculate($start, $start)->getValue());
-        $this->assertSame($expected, $calc->calculate($start, $start)->value());
+        static::assertSame($expected, $calc->calculate($start, $start)->getValue());
+        static::assertSame($expected, $calc->calculate($start, $start)->value());
 
-        $this->assertSame($expected, $calc->calculate($end, $end)->getValue());
-        $this->assertSame($expected, $calc->calculate($end, $end)->value());
+        static::assertSame($expected, $calc->calculate($end, $end)->getValue());
+        static::assertSame($expected, $calc->calculate($end, $end)->value());
 
         $expected = 1658771.9796656023;
 
-        $this->assertSame($expected, $calc->calculate($start, $end)->getValue());
-        $this->assertSame($expected, $calc->calculate($start, $end)->value());
+        static::assertSame($expected, $calc->calculate($start, $end)->getValue());
+        static::assertSame($expected, $calc->calculate($start, $end)->value());
 
-        $this->assertSame($expected, $calc->calculate($end, $start)->getValue());
-        $this->assertSame($expected, $calc->calculate($end, $start)->value());
+        static::assertSame($expected, $calc->calculate($end, $start)->getValue());
+        static::assertSame($expected, $calc->calculate($end, $start)->value());
     }
 
     /** @test */
@@ -78,10 +78,10 @@ class DistanceCalculatorTest extends TestCase
         $start = Position::create(31.7917,7.0926);  // Morocco
         $end   = Position::create(46.2276, 2.2137); // France
 
-        $this->assertSame(1658771.98, $calc->distance($start, $end));
-        $this->assertSame(1658771.98, $calc->distance($end, $start));
+        static::assertSame(1658771.98, $calc->distance($start, $end));
+        static::assertSame(1658771.98, $calc->distance($end, $start));
 
-        $this->assertSame(1658772.0, $calc->distance($start, $end, 0));
-        $this->assertSame(1658772.0, $calc->distance($end, $start, 0));
+        static::assertSame(1658772.0, $calc->distance($start, $end, 0));
+        static::assertSame(1658772.0, $calc->distance($end, $start, 0));
     }
 }

@@ -53,7 +53,7 @@ class GeocodingServiceTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->service);
+            static::assertInstanceOf($expected, $this->service);
         }
     }
 
@@ -63,17 +63,17 @@ class GeocodingServiceTest extends TestCase
         $address  = 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France';
         $response = $this->service->geocode($address);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             \Arcanedev\GeoLocation\Google\Geocoding\GeocodingResponse::class,
             $response
         );
 
-        $this->assertTrue($response->isOk());
+        static::assertTrue($response->isOk());
 
         $position = $response->getLocationPosition();
 
-        $this->assertGreaterThanOrEqual(48.85, $position->lat()->value());
-        $this->assertGreaterThanOrEqual(2.29, $position->lng()->value());
+        static::assertGreaterThanOrEqual(48.85, $position->lat()->value());
+        static::assertGreaterThanOrEqual(2.29, $position->lng()->value());
     }
 
     /** @test */
@@ -81,9 +81,9 @@ class GeocodingServiceTest extends TestCase
     {
         $response = $this->service->reversePosition(48.8556475, 2.2986304);
 
-        $this->assertTrue($response->isOk());
+        static::assertTrue($response->isOk());
 
-        $this->assertContains(
+        static::assertContains(
             'Anatole France, 75007 Paris, France',
             $response->getFormattedAddress()
         );

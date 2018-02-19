@@ -21,8 +21,8 @@ class LatitudeTest extends TestCase
     {
         $lat = $this->createLatitude();
 
-        $this->assertCoordinateInstance($lat);
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Latitude::class, $lat);
+        static::assertCoordinateInstance($lat);
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Latitude::class, $lat);
     }
 
     /** @test */
@@ -31,20 +31,20 @@ class LatitudeTest extends TestCase
         $lat   = $this->createLatitude();
         $value = 31.7917;
 
-        $this->assertSame($value, $lat->getValue());
-        $this->assertSame($value, $lat->value());
+        static::assertSame($value, $lat->getValue());
+        static::assertSame($value, $lat->value());
 
         $lat->setValue(0);
 
-        $this->assertSame(0.0, $lat->getValue());
-        $this->assertSame(0.0, $lat->value());
+        static::assertSame(0.0, $lat->getValue());
+        static::assertSame(0.0, $lat->value());
     }
 
     /** @test */
     public function it_can_get_min_and_max_values()
     {
-        $this->assertSame(-90.0, Latitude::getMin());
-        $this->assertSame(90.0, Latitude::getMax());
+        static::assertSame(-90.0, Latitude::getMin());
+        static::assertSame(90.0, Latitude::getMax());
     }
 
     /**

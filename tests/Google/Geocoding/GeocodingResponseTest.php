@@ -57,30 +57,30 @@ class GeocodingResponseTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->response);
+            static::assertInstanceOf($expected, $this->response);
         }
     }
 
     /** @test */
     public function it_can_get_raw_data()
     {
-        $this->assertSame($this->getServiceResponse(), $this->response->getRaw());
+        static::assertSame($this->getServiceResponse(), $this->response->getRaw());
     }
 
     /** @test */
     public function it_can_check_if_response_is_ok()
     {
-        $this->assertTrue($this->response->isOk());
+        static::assertTrue($this->response->isOk());
 
         $this->response = new GeocodingResponse([]);
 
-        $this->assertFalse($this->response->isOk());
+        static::assertFalse($this->response->isOk());
     }
 
     /** @test */
     public function it_can_get_formatted_address()
     {
-        $this->assertSame(
+        static::assertSame(
             '5 Avenue Anatole France, 75007 Paris, France',
             $this->response->getFormattedAddress()
         );
@@ -127,26 +127,26 @@ class GeocodingResponseTest extends TestCase
             ],
         ];
 
-        $this->assertSame($expected, $this->response->getAddressComponents());
+        static::assertSame($expected, $this->response->getAddressComponents());
     }
     /** @test */
     public function it_can_get_location_position()
     {
         $position = $this->response->getLocationPosition();
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Position::class, $position);
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Position::class, $position);
 
-        $this->assertCoordinateInstance($position->lat());
-        $this->assertCoordinateInstance($position->lng());
+        static::assertCoordinateInstance($position->lat());
+        static::assertCoordinateInstance($position->lng());
 
-        $this->assertSame(48.8588871, $position->lat()->value());
-        $this->assertSame(2.2944861, $position->lng()->value());
+        static::assertSame(48.8588871, $position->lat()->value());
+        static::assertSame(2.2944861, $position->lng()->value());
     }
 
     /** @test */
     public function it_can_get_location_type()
     {
-        $this->assertSame('ROOFTOP', $this->response->getLocationType());
+        static::assertSame('ROOFTOP', $this->response->getLocationType());
     }
 
     /** @test */
@@ -164,20 +164,20 @@ class GeocodingResponseTest extends TestCase
             ],
         ];
 
-        $this->assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Viewport::class, $viewport);
-        $this->assertSame($expected, $viewport->toArray());
+        static::assertInstanceOf(\Arcanedev\GeoLocation\Entities\Coordinates\Viewport::class, $viewport);
+        static::assertSame($expected, $viewport->toArray());
 
-        $this->assertSame($expected['northeast']['lat'],  $viewport->getNorthEast()->lat()->value());
-        $this->assertSame($expected['northeast']['lng'], $viewport->getNorthEast()->lng()->value());
+        static::assertSame($expected['northeast']['lat'],  $viewport->getNorthEast()->lat()->value());
+        static::assertSame($expected['northeast']['lng'], $viewport->getNorthEast()->lng()->value());
 
-        $this->assertSame($expected['southwest']['lat'],  $viewport->getSouthWest()->lat()->value());
-        $this->assertSame($expected['southwest']['lng'], $viewport->getSouthWest()->lng()->value());
+        static::assertSame($expected['southwest']['lat'],  $viewport->getSouthWest()->lat()->value());
+        static::assertSame($expected['southwest']['lng'], $viewport->getSouthWest()->lng()->value());
     }
 
     /** @test */
     public function it_can_get_place_id()
     {
-        $this->assertSame('ChIJuX7JjuFv5kcRbLER0b_rtC4', $this->response->getPlaceId());
+        static::assertSame('ChIJuX7JjuFv5kcRbLER0b_rtC4', $this->response->getPlaceId());
     }
 
     /** @test */
@@ -185,7 +185,7 @@ class GeocodingResponseTest extends TestCase
     {
         $expected = $this->expectedArray();
 
-        $this->assertSame($expected, $this->response->toArray());
+        static::assertSame($expected, $this->response->toArray());
     }
 
     /** @test */
@@ -193,13 +193,13 @@ class GeocodingResponseTest extends TestCase
     {
         $json = json_encode($this->response);
 
-        $this->assertJson($json);
-        $this->assertSame(json_encode($this->expectedArray()), $json);
+        static::assertJson($json);
+        static::assertSame(json_encode($this->expectedArray()), $json);
 
         $json = $this->response->toJson();
 
-        $this->assertJson($json);
-        $this->assertSame(json_encode($this->expectedArray()), $json);
+        static::assertJson($json);
+        static::assertSame(json_encode($this->expectedArray()), $json);
     }
 
     /* -----------------------------------------------------------------
