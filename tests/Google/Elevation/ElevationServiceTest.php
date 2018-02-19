@@ -1,9 +1,7 @@
 <?php namespace Arcanedev\GeoLocation\Tests\Google\Elevation;
 
 use Arcanedev\GeoLocation\Entities\Coordinates\Position;
-use Arcanedev\GeoLocation\Google\Elevation\ElevationService;
-use Arcanedev\GeoLocation\Tests\TestCase;
-use GuzzleHttp\Client;
+use Arcanedev\GeoLocation\Tests\Google\TestCase;
 
 /**
  * Class     ElevationServiceTest
@@ -30,7 +28,7 @@ class ElevationServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new ElevationService(new Client);
+        $this->service = $this->manager()->createElevationDriver();
     }
 
     protected function tearDown()

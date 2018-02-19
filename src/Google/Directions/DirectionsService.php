@@ -2,7 +2,6 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Google\AbstractService;
-use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -40,23 +39,6 @@ class DirectionsService extends AbstractService
      * @var string
      */
     protected $destination;
-
-    /* -----------------------------------------------------------------
-     |  Constructor
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * DirectionsService constructor.
-     *
-     * @param  \GuzzleHttp\ClientInterface  $client
-     */
-    public function __construct(ClientInterface $client)
-    {
-        parent::__construct($client);
-
-        $this->setKey(getenv('GOOGLE_MAPS_DIRECTIONS_KEY'));
-    }
 
     /* -----------------------------------------------------------------
      |  Getters & Setters

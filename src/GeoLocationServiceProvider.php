@@ -34,7 +34,13 @@ class GeoLocationServiceProvider extends PackageServiceProvider
     {
         parent::register();
 
-        //
+        $this->registerConfig();
+
+        $this->bind(\GuzzleHttp\ClientInterface::class, \GuzzleHttp\Client::class);
+
+        $this->singleton(Contracts\GoogleManager::class, function ($app) {
+            return new Google\GoogleManager($app);
+        });
     }
 
     /**
@@ -44,7 +50,7 @@ class GeoLocationServiceProvider extends PackageServiceProvider
     {
         parent::boot();
 
-        //
+        $this->publishConfig();
     }
 
     /**
@@ -55,7 +61,7 @@ class GeoLocationServiceProvider extends PackageServiceProvider
     public function provides()
     {
         return [
-            //
+            Contracts\GoogleManager::class,
         ];
     }
 }

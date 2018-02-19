@@ -2,7 +2,6 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Google\AbstractService;
-use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -36,23 +35,6 @@ class DistanceMatrixService extends AbstractService
 
     /** @var string */
     protected $units = 'metric';
-
-    /* -----------------------------------------------------------------
-     |  Constructor
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * GoogleDistanceMatrix constructor.
-     *
-     * @param  \GuzzleHttp\ClientInterface  $client
-     */
-    public function __construct(ClientInterface $client)
-    {
-        parent::__construct($client);
-
-        $this->setKey(getenv('GOOGLE_MAPS_DISTANCE_MATRIX_KEY'));
-    }
 
     /* -----------------------------------------------------------------
      |  Getters & Setters
