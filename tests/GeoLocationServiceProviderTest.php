@@ -35,7 +35,9 @@ class GeoLocationServiceProviderTest extends TestCase
     /** @test */
     public function it_can_provides()
     {
-        $expected = [];
+        $expected = [
+            \Arcanedev\GeoLocation\Contracts\GoogleManager::class
+        ];
 
         static::assertSame($expected, $this->getServiceProvider()->provides());
     }

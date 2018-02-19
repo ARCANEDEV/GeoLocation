@@ -1,8 +1,6 @@
 <?php namespace Arcanedev\GeoLocation\Tests\Google\Geocoding;
 
-use Arcanedev\GeoLocation\Google\Geocoding\GeocodingService;
-use Arcanedev\GeoLocation\Tests\TestCase;
-use GuzzleHttp\Client;
+use Arcanedev\GeoLocation\Tests\Google\TestCase;
 
 /**
  * Class     GeocodingServiceTest
@@ -29,7 +27,7 @@ class GeocodingServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new GeocodingService(new Client);
+        $this->service = $this->manager()->createGeocodingDriver();
     }
 
     protected function tearDown()

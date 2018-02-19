@@ -2,9 +2,7 @@
 
 use Arcanedev\GeoLocation\Entities\Coordinates\Position;
 use Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixResponse;
-use Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixService;
-use Arcanedev\GeoLocation\Tests\TestCase;
-use GuzzleHttp\Client;
+use Arcanedev\GeoLocation\Tests\Google\TestCase;
 
 /**
  * Class     DistanceMatrixServiceTest
@@ -18,6 +16,7 @@ class DistanceMatrixServiceTest extends TestCase
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /** @var  \Arcanedev\GeoLocation\Google\DistanceMatrix\DistanceMatrixService */
     protected $service;
 
@@ -25,11 +24,12 @@ class DistanceMatrixServiceTest extends TestCase
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     protected function setUp()
     {
         parent::setUp();
 
-        $this->service = new DistanceMatrixService(new Client);
+        $this->service = $this->manager()->createDistanceMatrixDriver();
     }
 
     protected function tearDown()
