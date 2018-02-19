@@ -2,6 +2,7 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position;
 use GuzzleHttp\ClientInterface;
+use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -32,10 +33,12 @@ abstract class AbstractService
      * GoogleDistanceMatrix constructor.
      *
      * @param  \GuzzleHttp\ClientInterface  $client
+     * @param  array                        $options
      */
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, array $options = [])
     {
         $this->setHttpClient($client);
+        $this->setOptions($options);
     }
 
     /* -----------------------------------------------------------------
@@ -55,6 +58,16 @@ abstract class AbstractService
         $this->client = $client;
 
         return $this;
+    }
+
+    /**
+     * Set the options.
+     *
+     * @param  array  $options
+     */
+    protected function setOptions(array $options): void
+    {
+        $this->setKey(Arr::get($options, 'key'));
     }
 
     /**

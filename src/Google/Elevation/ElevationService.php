@@ -2,7 +2,6 @@
 
 use Arcanedev\GeoLocation\Contracts\Entities\Coordinates\Position as PositionContract;
 use Arcanedev\GeoLocation\Google\AbstractService;
-use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -19,23 +18,6 @@ class ElevationService extends AbstractService
      */
 
     const BASE_URL = 'https://maps.googleapis.com/maps/api/elevation/json';
-
-    /* -----------------------------------------------------------------
-     |  Constructor
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * ElevationService constructor.
-     *
-     * @param  \GuzzleHttp\ClientInterface  $client
-     */
-    public function __construct(ClientInterface $client)
-    {
-        parent::__construct($client);
-
-        $this->setKey(getenv('GOOGLE_MAPS_ELEVATION_KEY'));
-    }
 
     /* -----------------------------------------------------------------
      |  Main Methods

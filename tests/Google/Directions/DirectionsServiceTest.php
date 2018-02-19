@@ -1,9 +1,7 @@
 <?php namespace Arcanedev\GeoLocation\Tests\Google\Directions;
 
 use Arcanedev\GeoLocation\Entities\Coordinates\Position;
-use Arcanedev\GeoLocation\Google\Directions\DirectionsService;
-use Arcanedev\GeoLocation\Tests\TestCase;
-use GuzzleHttp\Client;
+use Arcanedev\GeoLocation\Tests\Google\TestCase;
 
 /**
  * Class     DirectionsServiceTest
@@ -30,7 +28,7 @@ class DirectionsServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new DirectionsService(new Client);
+        $this->service = $this->manager()->createDirectionsDriver();
     }
 
     protected function tearDown()
