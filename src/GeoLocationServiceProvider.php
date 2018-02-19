@@ -33,6 +33,8 @@ class GeoLocationServiceProvider extends PackageServiceProvider
     public function register()
     {
         parent::register();
+
+        //
     }
 
     /**
@@ -41,6 +43,8 @@ class GeoLocationServiceProvider extends PackageServiceProvider
     public function boot()
     {
         parent::boot();
+
+        //
     }
 
     /**
